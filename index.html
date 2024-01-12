@@ -57,12 +57,11 @@
         // Add more data as needed
     ];
 
+    let shuffledImagesData = shuffleArray(imagesData);
     let currentIndex = 0;
 
     function nextImage() {
-        if (currentIndex < imagesData.length) {
-            const shuffledImagesData = shuffleArray(imagesData);
-
+        if (currentIndex < shuffledImagesData.length) {
             const currentImage = shuffledImagesData[currentIndex];
             document.getElementById('plantImage').src = currentImage.imageUrl;
 
@@ -82,6 +81,7 @@
         } else {
             alert('Training completed!');
             currentIndex = 0; // Reset index for continuous training
+            shuffledImagesData = shuffleArray(imagesData); // Reshuffle questions for the next training session
         }
     }
 
@@ -95,6 +95,7 @@
     }
 
     window.onload = nextImage;
+
     </script>
 </body>
 </html>
