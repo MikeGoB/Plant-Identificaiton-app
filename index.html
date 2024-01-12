@@ -41,48 +41,60 @@
     <button onclick="nextImage()">Next</button>
 
     <script>
-        const imagesData = [
-            { imageUrl: 'images/Alocasia.jpg', correctAnswer: 'Alocasia' },
-            { imageUrl: 'images/Ficus Elastica.jpg', correctAnswer: 'Ficus Elastica' },
-            { imageUrl: 'images/Monstera Deliciosa.jpg', correctAnswer: 'Monstera Deliciosa' },
-            { imageUrl: 'images/Triadica Sebifira.jpg', correctAnswer: 'Triadica Sebifira' },
-            // Add more data as needed
-        ];
-
-        let currentIndex = 0;
-
-        function nextImage() {
-            if (currentIndex < imagesData.length) {
-                const currentImage = imagesData[currentIndex];
-                document.getElementById('plantImage').src = currentImage.imageUrl;
-
-                const optionsContainer = document.getElementById('options');
-                optionsContainer.innerHTML = '';
-                const options = ['Alocasia', 'Ficus Elastica', 'Monstera Deliciosa', 'Triadica Sebifira']; // Replace with your actual options
-                options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.onclick = () => checkAnswer(option, currentImage.correctAnswer);
-                    optionsContainer.appendChild(button);
-                });
-
-                currentIndex++;
-            } else {
-                alert('Training completed!');
-                currentIndex = 0; // Reset index for continuous training
-            }
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
+        return array;
+    }
 
-        function checkAnswer(userAnswer, correctAnswer) {
-            if (userAnswer === correctAnswer) {
-                alert('Correct!');
-            } else {
-                alert(`Incorrect. The correct answer is ${correctAnswer}`);
-            }
-            nextImage();
+    const imagesData = [
+        { imageUrl: 'images/alocasia.jpg', correctAnswer: 'Alocasia' },
+        { imageUrl: 'images/ficus_elastica.jpg', correctAnswer: 'Ficus Elastica' },
+        { imageUrl: 'images/monstera_deliciosa.jpg', correctAnswer: 'Monstera Deliciosa' },
+        { imageUrl: 'images/triadica_sebifera.jpg', correctAnswer: 'Triadica Sebifera' },
+        // Add more data as needed
+    ];
+
+    let currentIndex = 0;
+
+    function nextImage() {
+        if (currentIndex < imagesData.length) {
+            const shuffledImagesData = shuffleArray(imagesData);
+
+            const currentImage = shuffledImagesData[currentIndex];
+            document.getElementById('plantImage').src = currentImage.imageUrl;
+
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+
+            const shuffledOptions = shuffleArray(['Alocasia', 'Ficus Elastica', 'Monstera Deliciosa', 'Triadica Sebifera']);
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, currentImage.correctAnswer);
+                optionsContainer.appendChild(button);
+            });
+
+            currentIndex++;
+        } else {
+            alert('Training completed!');
+            currentIndex = 0; // Reset index for continuous training
         }
+    }
 
-        window.onload = nextImage;
+    function checkAnswer(userAnswer, correctAnswer) {
+        if (userAnswer === correctAnswer) {
+            alert('Correct!');
+        } else {
+            alert(`Incorrect. The correct answer is ${correctAnswer}`);
+        }
+        nextImage();
+    }
+
+    window.onload = nextImage;
     </script>
 </body>
 </html>
