@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Identification Training</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Plant Identification Training</h1>
+    <div id="imageContainer">
+        <img id="plantImage" src="" alt="Plant Image">
+    </div>
+    <div id="options">
+        <!-- Options for user to choose -->
+    </div>
+    <button onclick="nextImage()">Next</button>
+
+    <script>
+        const imagesData = [
+            { imageUrl: 'path/to/rose.jpg', correctAnswer: 'Rose' },
+            { imageUrl: 'path/to/daisy.jpg', correctAnswer: 'Daisy' },
+            { imageUrl: 'path/to/tulip.jpg', correctAnswer: 'Tulip' },
+            { imageUrl: 'path/to/sunflower.jpg', correctAnswer: 'Sunflower' },
+            // Add more data as needed
+        ];
+
+        let currentIndex = 0;
+
+        function nextImage() {
+            if (currentIndex < imagesData.length) {
+                const currentImage = imagesData[currentIndex];
+                document.getElementById('plantImage').src = currentImage.imageUrl;
+
+                const optionsContainer = document.getElementById('options');
+                optionsContainer.innerHTML = '';
+                const options = ['Rose', 'Daisy', 'Tulip', 'Sunflower']; // Replace with your actual options
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.onclick = () => checkAnswer(option, currentImage.correctAnswer);
+                    optionsContainer.appendChild(button);
+                });
+
+                currentIndex++;
+            } else {
+                alert('Training completed!');
+                currentIndex = 0; // Reset index for continuous training
+            }
+        }
+
+        function checkAnswer(userAnswer, correctAnswer) {
+            if (userAnswer === correctAnswer) {
+                alert('Correct!');
+            } else {
+                alert(`Incorrect. The correct answer is ${correctAnswer}`);
+            }
+            nextImage();
+        }
+
+        window.onload = nextImage;
+    </script>
+</body>
+</html>
